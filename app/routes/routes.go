@@ -32,6 +32,6 @@ func Register(app *gin.Engine) {
 
 func ErrRouter(c *gin.Context) {
 	c.JSON(http.StatusBadRequest, gin.H{
-		"errors": "this page could not be found",
+		"errors": "this page could not be found brother",
 	})
 }
