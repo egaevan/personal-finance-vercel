@@ -1,4 +1,4 @@
-package income_handlers
+package income
 
 import (
 	"github.com/gin-gonic/gin"
@@ -11,7 +11,7 @@ func (h *incomeHandler) GetIncome(ctx *gin.Context) {
 	reqId := ctx.Param("userId")
 	userId := utils.ConvertStrToInt(reqId)
 
-	res, err := h.incomeUseCase.GetAllIncome(ctx, userId)
+	res, err := h.incomeUseCase.GetIncome(ctx, userId)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, utils.RestBody{
 			Message: "internal error",
