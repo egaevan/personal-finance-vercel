@@ -1,4 +1,4 @@
-package income_handlers
+package income
 
 import (
 	"github.com/personal-finance-vercel/app/domain/usecase"
