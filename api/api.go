@@ -8,7 +8,8 @@ import (
 )
 
 var (
-	app *gin.Engine
+	app      *gin.Engine
+	basePath = "/api"
 )
 
 // @title Golang Vercel Deployment
@@ -20,7 +21,9 @@ var (
 func init() {
 
 	app = gin.New()
-	routes.Register(app)
+	app.NoRoute(routes.ErrRouter)
+	basePath := app.Group(basePath)
+	routes.Register(basePath)
 }
 
 // Entrypoint
