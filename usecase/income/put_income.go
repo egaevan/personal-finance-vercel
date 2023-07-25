@@ -3,7 +3,7 @@ package income
 import (
 	"context"
 	"errors"
-	"github.com/personal-finance-vercel/app/domain/entity"
+	"github.com/personal-finance-vercel/domain/entity"
 )
 
 func (i *incomeInteractor) PutIncomeById(ctx context.Context, req *entity.Income, userId, id int) error {

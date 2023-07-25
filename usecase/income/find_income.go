@@ -2,7 +2,7 @@ package income
 
 import (
 	"context"
-	"github.com/personal-finance-vercel/app/domain/entity"
+	"github.com/personal-finance-vercel/domain/entity"
 )
 
 func (i *incomeInteractor) FindIncome(ctx context.Context, userId, id int) (*entity.Income, error) {

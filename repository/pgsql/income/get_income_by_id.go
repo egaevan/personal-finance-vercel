@@ -4,9 +4,9 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"github.com/personal-finance-vercel/app/domain/entity"
-	"github.com/personal-finance-vercel/app/internal/repository/mapper"
-	"github.com/personal-finance-vercel/app/internal/repository/models"
+	"github.com/personal-finance-vercel/domain/entity"
+	"github.com/personal-finance-vercel/repository/mapper"
+	"github.com/personal-finance-vercel/repository/models"
 )
 
 func (i *IncomeRepository) GetIncomeById(ctx context.Context, userId, id int) (*entity.Income, error) {

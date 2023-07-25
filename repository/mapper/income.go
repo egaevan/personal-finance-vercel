@@ -1,8 +1,8 @@
 package mapper
 
 import (
-	"github.com/personal-finance-vercel/app/domain/entity"
-	"github.com/personal-finance-vercel/app/internal/repository/models"
+	"github.com/personal-finance-vercel/domain/entity"
+	"github.com/personal-finance-vercel/repository/models"
 )
 
 func ToModelIncome(req *entity.Income) *models.Income {

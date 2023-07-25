@@ -1,7 +1,7 @@
 package income
 
 import (
-	"github.com/personal-finance-vercel/app/internal/repository/pgsql/income"
+	"github.com/personal-finance-vercel/repository/pgsql/income"
 )
 
 type incomeInteractor struct {

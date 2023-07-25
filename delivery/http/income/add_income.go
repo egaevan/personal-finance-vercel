@@ -2,19 +2,17 @@ package income
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/personal-finance-vercel/app/domain/entity"
+	"github.com/personal-finance-vercel/domain/entity"
 	"github.com/personal-finance-vercel/pkg/utils"
 	"net/http"
 )
 
-func (h *incomeHandler) PutIncome(ctx *gin.Context) {
-
-	reqId := ctx.Param("userId")
-	id := ctx.Param("id")
-	userId := utils.ConvertStrToInt(reqId)
-	incomeId := utils.ConvertStrToInt(id)
+func (h *incomeHandler) AddIncome(ctx *gin.Context) {
 
 	dataReq := entity.Income{}
+
+	reqId := ctx.Param("userId")
+	userId := utils.ConvertStrToInt(reqId)
 
 	if err := ctx.Bind(&dataReq); err != nil {
 		ctx.JSON(http.StatusBadRequest, utils.RestBody{
@@ -23,7 +21,9 @@ func (h *incomeHandler) PutIncome(ctx *gin.Context) {
 		return
 	}
 
-	err := h.incomeUseCase.PutIncomeById(ctx, &dataReq, userId, incomeId)
+	dataReq.UserId = userId
+
+	err := h.incomeUseCase.AddIncome(ctx, &dataReq)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, utils.RestBody{
 			Message: "internal error",
@@ -31,9 +31,8 @@ func (h *incomeHandler) PutIncome(ctx *gin.Context) {
 
 		return
 	}
-
-	ctx.JSON(http.StatusOK, utils.RestBody{
-		Message: "success",
+	ctx.JSON(http.StatusCreated, utils.RestBody{
+		Message: "success create",
 	})
 	return
 }

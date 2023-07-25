@@ -1,10 +1,10 @@
-package routes
+package routes_old
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/personal-finance-vercel/app/internal/config"
-	incomeHttp "github.com/personal-finance-vercel/app/internal/delivery/http/income"
-	incomeRepo "github.com/personal-finance-vercel/app/internal/repository/pgsql/income"
+	"github.com/personal-finance-vercel/config"
+	incomeHttp "github.com/personal-finance-vercel/delivery/http/income"
+	incomeRepo "github.com/personal-finance-vercel/repository/pgsql/income"
 	"net/http"
 )
 

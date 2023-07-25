@@ -3,9 +3,9 @@ package income
 import (
 	"context"
 	"fmt"
-	"github.com/personal-finance-vercel/app/domain/entity"
-	"github.com/personal-finance-vercel/app/internal/repository/mapper"
-	"github.com/personal-finance-vercel/app/internal/repository/models"
+	"github.com/personal-finance-vercel/domain/entity"
+	"github.com/personal-finance-vercel/repository/mapper"
+	"github.com/personal-finance-vercel/repository/models"
 )
 
 func (i *IncomeRepository) PutIncomeById(ctx context.Context, ett *entity.Income, userId, id int) error {

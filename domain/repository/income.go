@@ -2,7 +2,7 @@ package repository
 
 import (
 	"context"
-	"github.com/personal-finance-vercel/app/domain/entity"
+	"github.com/personal-finance-vercel/domain/entity"
 )
 
 type IncomeRepository interface {
