@@ -1,29 +1,52 @@
 package api
 
 import (
-	"github.com/personal-finance-vercel/app/routes"
-	"net/http"
-
 	"github.com/gin-gonic/gin"
+	"github.com/personal-finance-vercel/config"
+	incomeHttp "github.com/personal-finance-vercel/delivery/http/income"
+	outcomeHttp "github.com/personal-finance-vercel/delivery/http/outcome"
+	incomeRepo "github.com/personal-finance-vercel/repository/pgsql/income"
+	outcomeRepo "github.com/personal-finance-vercel/repository/pgsql/outcome"
+	"net/http"
 )
 
 var (
-	app      *gin.Engine
-	basePath = "/api"
+	app         *gin.Engine
+	basePath    = "/api/serv1"
+	db          = config.InitPgsqlDB()
+	repoIncome  = incomeRepo.NewIncomeRepository(db)
+	repoOutcome = outcomeRepo.NewOutcomeRepository(db)
+	incomeHD    = incomeHttp.NewHandler(repoIncome)
+	outcomeHD   = outcomeHttp.NewHandler(repoOutcome)
 )
 
-// @title Golang Vercel Deployment
-// @description API Documentation for Golang deployment in vercel serverless environment
-// @version 1.0
-
-// @schemes https http
-// @host golang-vercel.vercel.app
 func init() {
 
-	app = gin.New()
-	app.NoRoute(routes.ErrRouter)
-	basePath := app.Group(basePath)
-	routes.Register(basePath)
+	app = gin.Default()
+	app.NoRoute(ErrRouter)
+	route := app.Group(basePath)
+
+	incomeRoute := route.Group("/income")
+	{
+		incomeRoute.GET("/:userId", incomeHD.GetIncome)
+		incomeRoute.GET("/:userId/:id", incomeHD.FindIncome)
+		incomeRoute.POST("/:userId/add", incomeHD.AddIncome)
+		incomeRoute.PUT("/:userId/:id", incomeHD.PutIncome)
+	}
+
+	outcomeRoute := route.Group("/outcome")
+	{
+		outcomeRoute.GET("/:userId", outcomeHD.GetOutcome)
+		outcomeRoute.GET("/:userId/:id", outcomeHD.FindOutcome)
+		outcomeRoute.POST("/:userId/add", outcomeHD.AddOutcome)
+		outcomeRoute.PUT("/:userId/:id", outcomeHD.PutOutcome)
+	}
+}
+
+func ErrRouter(c *gin.Context) {
+	c.JSON(http.StatusBadRequest, gin.H{
+		"errors": "this page could not be found",
+	})
 }
 
 // Entrypoint
