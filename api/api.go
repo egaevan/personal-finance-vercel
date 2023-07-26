@@ -4,16 +4,20 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/personal-finance-vercel/config"
 	incomeHttp "github.com/personal-finance-vercel/delivery/http/income"
+	outcomeHttp "github.com/personal-finance-vercel/delivery/http/outcome"
 	incomeRepo "github.com/personal-finance-vercel/repository/pgsql/income"
+	outcomeRepo "github.com/personal-finance-vercel/repository/pgsql/outcome"
 	"net/http"
 )
 
 var (
-	app        *gin.Engine
-	basePath   = "/api/serv1"
-	db         = config.InitPgsqlDB()
-	repoIncome = incomeRepo.NewIncomeRepository(db)
-	incomeHD   = incomeHttp.NewHandler(repoIncome)
+	app         *gin.Engine
+	basePath    = "/api/serv1"
+	db          = config.InitPgsqlDB()
+	repoIncome  = incomeRepo.NewIncomeRepository(db)
+	repoOutcome = outcomeRepo.NewOutcomeRepository(db)
+	incomeHD    = incomeHttp.NewHandler(repoIncome)
+	outcomeHD   = outcomeHttp.NewHandler(repoOutcome)
 )
 
 func init() {
@@ -28,6 +32,14 @@ func init() {
 		incomeRoute.GET("/:userId/:id", incomeHD.FindIncome)
 		incomeRoute.POST("/:userId/add", incomeHD.AddIncome)
 		incomeRoute.PUT("/:userId/:id", incomeHD.PutIncome)
+	}
+
+	outcomeRoute := route.Group("/outcome")
+	{
+		outcomeRoute.GET("/:userId", outcomeHD.GetOutcome)
+		outcomeRoute.GET("/:userId/:id", outcomeHD.FindOutcome)
+		outcomeRoute.POST("/:userId/add", outcomeHD.AddOutcome)
+		outcomeRoute.PUT("/:userId/:id", outcomeHD.PutOutcome)
 	}
 }
 
