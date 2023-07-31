@@ -1,4 +1,4 @@
-package outcome
+package expense
 
 import (
 	"context"
@@ -6,8 +6,8 @@ import (
 	"github.com/personal-finance-vercel/domain/entity"
 )
 
-func (o *outcomeInteractor) PutOutcomeById(ctx context.Context, req *entity.Outcome, userId, id int) error {
-	res, err := o.outcomeRepo.GetOutcomeById(ctx, userId, id)
+func (o *expenseInteractor) PutExpenseById(ctx context.Context, req *entity.Expense, userId, id int) error {
+	res, err := o.expenseRepo.GetExpenseById(ctx, userId, id)
 	if err != nil {
 		return err
 	}
@@ -16,7 +16,7 @@ func (o *outcomeInteractor) PutOutcomeById(ctx context.Context, req *entity.Outc
 		return errors.New("not valid user")
 	}
 
-	err = o.outcomeRepo.PutOutcomeById(ctx, req, userId, id)
+	err = o.expenseRepo.PutExpenseById(ctx, req, userId, id)
 	if err != nil {
 		return err
 	}

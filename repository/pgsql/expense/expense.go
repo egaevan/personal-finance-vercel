@@ -1,4 +1,4 @@
-package outcome
+package expense
 
 import (
 	"context"
@@ -10,8 +10,8 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-func (o *OutcomeRepository) GetOutcome(ctx context.Context, userId int) ([]*entity.Outcome, error) {
-	query := fmt.Sprintf(`select id, user_id, outcome_information, total_outcome, created_at, updated_at from %s where user_id = $1`, models.Outcome{}.GetTableName())
+func (o *Repository) GetExpense(ctx context.Context, userId int) ([]*entity.Expense, error) {
+	query := fmt.Sprintf(`select id, user_id, expense_information, total_expense, created_at, updated_at from %s where user_id = $1`, models.Expense{}.GetTableName())
 
 	rows, err := o.db.QueryContext(ctx, query, userId)
 
@@ -30,14 +30,14 @@ func (o *OutcomeRepository) GetOutcome(ctx context.Context, userId int) ([]*enti
 		}
 	}()
 
-	resRow := make([]*models.Outcome, 0)
+	resRow := make([]*models.Expense, 0)
 	for rows.Next() {
-		t := &models.Outcome{}
+		t := &models.Expense{}
 		err = rows.Scan(
 			&t.ID,
 			&t.UserId,
-			&t.OutcomeInformation,
-			&t.TotalOutcome,
+			&t.ExpenseInformation,
+			&t.TotalExpense,
 			&t.CreatedDate,
 			&t.UpdatedDate,
 		)
@@ -50,7 +50,7 @@ func (o *OutcomeRepository) GetOutcome(ctx context.Context, userId int) ([]*enti
 		resRow = append(resRow, t)
 	}
 
-	result := mapper.ToArrEntityOutcome(resRow)
+	result := mapper.ToArrEntityExpense(resRow)
 
 	return result, nil
 }

@@ -7,14 +7,12 @@ import (
 	"net/http"
 )
 
-func (h *outcomeHandler) PutOutcome(ctx *gin.Context) {
+func (h *expenseHandler) AddExpense(ctx *gin.Context) {
+
+	dataReq := entity.Expense{}
 
 	reqId := ctx.Param("userId")
-	id := ctx.Param("id")
 	userId := utils.ConvertStrToInt(reqId)
-	incomeId := utils.ConvertStrToInt(id)
-
-	dataReq := entity.Outcome{}
 
 	if err := ctx.Bind(&dataReq); err != nil {
 		ctx.JSON(http.StatusBadRequest, utils.RestBody{
@@ -23,7 +21,9 @@ func (h *outcomeHandler) PutOutcome(ctx *gin.Context) {
 		return
 	}
 
-	err := h.outcomeUseCase.PutOutcomeById(ctx, &dataReq, userId, incomeId)
+	dataReq.UserId = userId
+
+	err := h.expenseUseCase.AddExpense(ctx, &dataReq)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, utils.RestBody{
 			Message: "internal error",
@@ -31,9 +31,8 @@ func (h *outcomeHandler) PutOutcome(ctx *gin.Context) {
 
 		return
 	}
-
-	ctx.JSON(http.StatusOK, utils.RestBody{
-		Message: "success",
+	ctx.JSON(http.StatusCreated, utils.RestBody{
+		Message: "success create",
 	})
 	return
 }

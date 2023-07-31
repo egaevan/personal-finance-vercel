@@ -5,11 +5,11 @@ import (
 )
 
 type incomeInteractor struct {
-	incomeRepo income.IncomeRepository
+	incomeRepo income.Repository
 }
 
 func NewIncomeInteractor(
-	incomeRepo income.IncomeRepository,
+	incomeRepo income.Repository,
 ) *incomeInteractor {
 	return &incomeInteractor{
 		incomeRepo: incomeRepo,

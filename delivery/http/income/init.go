@@ -10,7 +10,7 @@ type incomeHandler struct {
 	incomeUseCase usecase.IncomeUseCase
 }
 
-func NewHandler(incomeRepo incomeRepo.IncomeRepository) *incomeHandler {
+func NewHandler(incomeRepo incomeRepo.Repository) *incomeHandler {
 	incomeUseCase := incomeUC.NewIncomeInteractor(incomeRepo)
 	return &incomeHandler{
 		incomeUseCase: incomeUseCase,

@@ -6,12 +6,12 @@ import (
 	"net/http"
 )
 
-func (h *outcomeHandler) GetOutcome(ctx *gin.Context) {
+func (h *expenseHandler) GetExpense(ctx *gin.Context) {
 
 	reqId := ctx.Param("userId")
 	userId := utils.ConvertStrToInt(reqId)
 
-	res, err := h.outcomeUseCase.GetOutcome(ctx, userId)
+	res, err := h.expenseUseCase.GetExpense(ctx, userId)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, utils.RestBody{
 			Message: "internal error",

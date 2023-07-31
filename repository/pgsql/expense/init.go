@@ -1,4 +1,4 @@
-package income
+package expense
 
 import "database/sql"
 
@@ -6,6 +6,6 @@ type Repository struct {
 	db *sql.DB
 }
 
-func NewIncomeRepository(db *sql.DB) Repository {
+func NewExpenseRepository(db *sql.DB) Repository {
 	return Repository{db: db}
 }
