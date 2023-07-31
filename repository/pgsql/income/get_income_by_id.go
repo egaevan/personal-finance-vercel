@@ -9,7 +9,7 @@ import (
 	"github.com/personal-finance-vercel/repository/models"
 )
 
-func (i *IncomeRepository) GetIncomeById(ctx context.Context, userId, id int) (*entity.Income, error) {
+func (i *Repository) GetIncomeById(ctx context.Context, userId, id int) (*entity.Income, error) {
 	query := fmt.Sprintf(`select id, user_id, income_information, total_income, created_at, updated_at from %s where user_id = $1 AND id = $2`, models.Income{}.GetTableName())
 
 	income := &models.Income{}

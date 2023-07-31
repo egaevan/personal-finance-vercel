@@ -8,7 +8,7 @@ import (
 	"github.com/personal-finance-vercel/repository/models"
 )
 
-func (i *IncomeRepository) PutIncomeById(ctx context.Context, ett *entity.Income, userId, id int) error {
+func (i *Repository) PutIncomeById(ctx context.Context, ett *entity.Income, userId, id int) error {
 	req := mapper.ToModelIncome(ett)
 	query := fmt.Sprintf(`UPDATE %s SET total_income = $1, income_information = $2 where user_id = $3 AND id = $4`, models.Income{}.GetTableName())
 

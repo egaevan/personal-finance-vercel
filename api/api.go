@@ -3,10 +3,10 @@ package api
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/personal-finance-vercel/config"
+	expenseHttp "github.com/personal-finance-vercel/delivery/http/expense"
 	incomeHttp "github.com/personal-finance-vercel/delivery/http/income"
-	outcomeHttp "github.com/personal-finance-vercel/delivery/http/outcome"
+	expenseRepo "github.com/personal-finance-vercel/repository/pgsql/expense"
 	incomeRepo "github.com/personal-finance-vercel/repository/pgsql/income"
-	outcomeRepo "github.com/personal-finance-vercel/repository/pgsql/outcome"
 	"net/http"
 )
 
@@ -15,9 +15,9 @@ var (
 	basePath    = "/api/serv1"
 	db          = config.InitPgsqlDB()
 	repoIncome  = incomeRepo.NewIncomeRepository(db)
-	repoOutcome = outcomeRepo.NewOutcomeRepository(db)
+	repoExpense = expenseRepo.NewExpenseRepository(db)
 	incomeHD    = incomeHttp.NewHandler(repoIncome)
-	outcomeHD   = outcomeHttp.NewHandler(repoOutcome)
+	expenseHD   = expenseHttp.NewHandler(repoExpense)
 )
 
 func init() {
@@ -34,12 +34,12 @@ func init() {
 		incomeRoute.PUT("/:userId/:id", incomeHD.PutIncome)
 	}
 
-	outcomeRoute := route.Group("/outcome")
+	expenseRoute := route.Group("/expense")
 	{
-		outcomeRoute.GET("/:userId", outcomeHD.GetOutcome)
-		outcomeRoute.GET("/:userId/:id", outcomeHD.FindOutcome)
-		outcomeRoute.POST("/:userId/add", outcomeHD.AddOutcome)
-		outcomeRoute.PUT("/:userId/:id", outcomeHD.PutOutcome)
+		expenseRoute.GET("/:userId", expenseHD.GetExpense)
+		expenseRoute.GET("/:userId/:id", expenseHD.FindExpense)
+		expenseRoute.POST("/:userId/add", expenseHD.AddExpense)
+		expenseRoute.PUT("/:userId/:id", expenseHD.PutExpense)
 	}
 }
 

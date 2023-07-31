@@ -6,14 +6,14 @@ import (
 	"net/http"
 )
 
-func (h *outcomeHandler) FindOutcome(ctx *gin.Context) {
+func (h *expenseHandler) FindExpense(ctx *gin.Context) {
 
 	reqId := ctx.Param("userId")
 	id := ctx.Param("id")
 	userId := utils.ConvertStrToInt(reqId)
-	incomeId := utils.ConvertStrToInt(id)
+	expenseId := utils.ConvertStrToInt(id)
 
-	res, err := h.outcomeUseCase.FindOutcome(ctx, userId, incomeId)
+	res, err := h.expenseUseCase.FindExpense(ctx, userId, expenseId)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, utils.RestBody{
 			Message: "internal error",
