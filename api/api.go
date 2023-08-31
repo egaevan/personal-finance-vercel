@@ -33,6 +33,10 @@ func init() {
 		incomeRoute.POST("/:userId/add", incomeHD.AddIncome)
 		incomeRoute.PUT("/:userId/:id", incomeHD.PutIncome)
 	}
+	mockRoute := route.Group("/mock")
+	{
+		mockRoute.GET("/pdf", incomeHD.GetMock)
+	}
 
 	expenseRoute := route.Group("/expense")
 	{
