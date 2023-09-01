@@ -1,6 +1,7 @@
 package api
 
 import (
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/personal-finance-vercel/config"
 	expenseHttp "github.com/personal-finance-vercel/delivery/http/expense"
@@ -25,6 +26,14 @@ func init() {
 	app = gin.Default()
 	app.NoRoute(ErrRouter)
 	route := app.Group(basePath)
+
+	route.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"*"},
+		AllowMethods:     []string{"PUT", "PATCH", "GET", "POST"},
+		AllowHeaders:     []string{"Origin"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+	}))
 
 	incomeRoute := route.Group("/income")
 	{
